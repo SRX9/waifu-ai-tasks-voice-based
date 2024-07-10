@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+import { Toaster } from "sonner";
+import Image from "next/image";
 
-const inter = Inter({ subsets: ["latin"] });
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +22,36 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <head>
+        <meta name="viewport" content="width=device-width" />
+      </head>
+      <body
+        className={cn(
+          "min-h-screen bg-background overflow-hidden font-sans antialiased relative ",
+          fontSans.variable
+        )}
+      >
+        <div className="absolute top-0 w-full flex flex-col gap-3 justify-center z-20  items-center ">
+          <div className="px-3 py-2 pb-2 text-center text-lg text-gray-700 font-semibold w-[fit-content] bg-white rounded-b-xl shadow-2xl  ">
+            Waifui
+            <div className=" text-xs pt-1 font-normal text-gray-500 ">
+              Friendly Waifu Assistant
+            </div>
+          </div>
+        </div>
+        <Image
+          src={"/Designer-min.jpg"}
+          height={720}
+          className=" absolute w-screen h-screen z-0 object-cover "
+          width={1080}
+          alt="Waifu ai"
+        />
+        <div className="h-screen w-full relative flex items-center justify-center">
+          <div className="absolute pointer-events-none inset-0 flex items-center justify-center "></div>
+          {children}
+        </div>
+        <Toaster richColors theme="system" />
+      </body>
     </html>
   );
 }
